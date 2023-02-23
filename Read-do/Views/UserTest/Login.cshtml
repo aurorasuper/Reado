@@ -1,0 +1,59 @@
+﻿@model Read_do.Models.TblUserDetails
+
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+@if(ViewBag.DeleteUser != null)
+{
+    @ViewBag.DeleteUser
+}
+@if(ViewBag.RegisteredUser != null)
+{
+    <p class="text-success">@ViewBag.RegisteredUser </p>
+}
+
+
+
+<hr />
+<div class="row">
+    <div class="col">
+        <h1>Welcome to Read-do!</h1>
+        <p>Read-do is a webbapplication for book lovers. Use our database to find books you want to read. Add them to your personal reading list and give them a score when you have read them. </p>
+    </div>
+    <div class="col">
+ 
+        <h3>Login</h3>
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           
+            <div class="form-group">
+                <label asp-for="userName" class="control-label"></label>
+                <input asp-for="userName" class="form-control" />
+                <span asp-validation-for="userName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="password" class="control-label"></label>
+                <input asp-for="password" class="form-control" />
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+
+                <p class="text-danger">@ViewBag.LoginError</p>
+                <br />
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
+        <div>
+            <a asp-action="Register">Not already a user? Register here</a>
+        </div>      
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,53 @@
+﻿@model Read_do.Models.BookDetails
+
+@{
+    ViewData["Title"] = "DeleteBook";
+}
+
+@ViewBag.Error
+@ViewBag.isbnError
+<h3 class="text-danger">Are you sure you want to delete this book from the database?</h3>
+
+@if(Model != null)
+{
+    <div class="container" id="book_card">
+        <div class="row">
+            <div class="col">
+
+              <img src="@Html.DisplayFor(model => model.imageUrl)" alt="@Html.DisplayFor(model => model.title) Cover" height="200">
+
+            </div>
+            <div class="col-7">
+                <h6>
+                    @Html.DisplayFor(model => model.title)
+                </h6>
+                <p>@Html.DisplayNameFor(model => model.author): @Html.DisplayFor(model=> model.author)</p>
+                <p>@Html.DisplayNameFor(model => model.publishedYear): @Html.DisplayFor(model => model.publishedYear)</p>
+                <p>@Html.DisplayNameFor(model => model.publisher): @Html.DisplayFor(model => model.publisher)</p>
+                <p>@Html.DisplayNameFor(model => model.isbn): @Html.DisplayFor(model => model.isbn)</p>
+ 
+            </div>
+        </div>
+    </div>     
+
+<div class="d-flex flex-row-reverse">
+   <div class="p-2">
+
+       @using (Html.BeginForm("ConfirmDeleteBook", "UserTest", FormMethod.Post))
+                    {
+                        <input type="hidden" id="isbn" name="isbn" value=@Model.isbn >
+                        <input class="btn btn-danger" type="submit" value="Confirm">
+                    }
+                   
+       
+  </div>
+  <div class="p-2">
+
+    <button type="button" onclick="location.href='@Url.Action("BrowseAdmin", "UserTest")'" class="btn btn-secondary" >
+            Cancel
+    </button>
+  </div>        
+</div>
+}
+
+  

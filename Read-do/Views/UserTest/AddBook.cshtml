@@ -1,0 +1,63 @@
+﻿@model Read_do.Models.BookDetails
+
+@{
+    ViewData["Title"] = "Add a book";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p class="text-danger"> @ViewBag.AddError </p>
+<h4>BookDetails</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddBook">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="isbn" class="control-label"></label>
+                <input asp-for="isbn" class="form-control" />
+                <span asp-validation-for="isbn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="title" class="control-label"></label>
+                <input asp-for="title" class="form-control" />
+                <span asp-validation-for="title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="author" class="control-label"></label>
+                <input asp-for="author" class="form-control" />
+                <span asp-validation-for="author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="publishedYear" class="control-label"></label>
+                <input asp-for="publishedYear" class="form-control" />
+                <span asp-validation-for="publishedYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="publisher" class="control-label"></label>
+                <input asp-for="publisher" class="form-control" />
+                <span asp-validation-for="publisher" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="imageUrl" class="control-label"></label>
+                <input asp-for="imageUrl" class="form-control" />
+                <span asp-validation-for="imageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="d-flex flex-row-reverse">
+   
+
+    <button type="button" onclick="location.href='@Url.Action("BrowseBooks", "UserTest")'" class="btn btn-secondary" >
+            Cancel
+    </button>
+        
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

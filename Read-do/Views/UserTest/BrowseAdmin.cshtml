@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Read_do.Models.BookDetails>
+
+@{
+    ViewData["Title"] = "All Books";
+}
+
+<h1>BrowseAdmin</h1>
+
+<p>
+    <a asp-action="AddBook">Add new book</a>
+</p>
+
+<p class="text-success">@ViewBag.Book</p>
+
+<h4>Search Books</h4>
+<div id="SearchContainer">
+    <div class="row">
+            @using(Html.BeginForm("Search", "UserTest", FormMethod.Post))
+            {
+                
+                <label for="searchAuthor">Author:</label>
+                <input type="text" id="seachAuthor" name="searchAuthor">
+                
+                <input type="submit" name="SearchForm" value="Search" class="btn btn-primary" />
+            }
+        </div>
+</div>
+
+
+    <h4>Filter Books</h4>
+    <div id="filterContainer">
+        <div class="row">
+            @using(Html.BeginForm("YearFilter", "UserTest", FormMethod.Post))
+            {
+                
+                <label for="YearFilter">Filter by:</label>
+                <select id="YearFilter" name="YearFilter">
+                  <option value="before">Published before</option>
+                  <option value="after">Published after</option>
+                  <option value="on">Published on</option>
+                  
+                </select>
+                <label for="Year">Year:</label>
+                <input type="number" id="Year" name="Year" min="0" max="2022">
+                <input type="submit" name="FilterForm" value="Filter" class="btn btn-primary" />
+            }
+        </div>
+    </div>
+
+<h4>Sort books</h4>
+<div id="SortContainer">
+    <div class="row">
+            @using(Html.BeginForm("Sort", "UserTest", FormMethod.Post))
+            {
+                <label for="SortCat">Sort categoeries:</label>
+                <select id="SortCat" name="SortCat">
+                  <option value="Book_Title">@Html.DisplayNameFor(model => model.title)</option>
+                  <option value="Book_Author">@Html.DisplayNameFor(model => model.author)</option>
+                  <option value="Year_of_Publication">@Html.DisplayNameFor(model => model.publishedYear)</option>
+                  <option value="Publisher">@Html.DisplayNameFor(model => model.publisher)</option>
+                </select>
+
+                <label for="SortDir">Sort by:</label>
+                <select id="SortDir" name="SortDir">
+                  <option value="asc">Ascending</option>
+                  <option value="desc">Descending</option>
+                </select>
+                
+                
+                <input type="submit" name="FilterForm" value="Sort" class="btn btn-primary" />
+            }
+        </div>
+</div>
+
+<p>@ViewBag.Filter
+@ViewBag.Sort
+@ViewBag.Author
+@ViewBag.Error
+</p>
+@foreach (var item in Model) {
+    <div class="container" id="book_card">
+        <div class="row">
+            <div class="col">
+
+              <img src="@Html.DisplayFor(modelItem => item.imageUrl)" alt="@Html.DisplayFor(modelItem => item.title) Cover" height="200">
+
+            </div>
+            <div class="col-7">
+                <h6>
+                    @Html.DisplayFor(modelItem => item.title)
+                </h6>
+                <p>@Html.DisplayNameFor(model => model.author): @Html.DisplayFor(modelItem => item.author)</p>
+                <p>@Html.DisplayNameFor(model => model.publishedYear): @Html.DisplayFor(modelItem => item.publishedYear)</p>
+                <p>@Html.DisplayNameFor(model => model.publisher): @Html.DisplayFor(modelItem => item.publisher)</p>
+                <p>@Html.DisplayNameFor(model => model.isbn): @Html.DisplayFor(modelItem => item.isbn)</p>
+ 
+            </div>
+            <div class="col">
+                @Html.ActionLink("Edit", "UpdateBook", new { isbn=item.isbn  }) |
+                @Html.ActionLink("Delete", "DeleteBook", new {  isbn=item.isbn  })
+            </div>
+        </div>
+    </div>   
+}
+

@@ -1,0 +1,95 @@
+﻿@model Read_do.Models.TblUserDetails
+
+@{
+    ViewData["Title"] = "EditProfile";
+}
+
+
+<hr />
+
+@if(ViewBag.UpdateUser == "Successfully updated user"){
+    <p class="text-success">@ViewBag.UpdateUser</p>
+}else{
+    <p class="text-danger">@ViewBag.UpdateUser</p>
+}
+
+<div class="row">
+
+    <h3>Edit profile</h3>
+    <div class="col-md-4">
+        <form asp-action="EditProfile">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          
+            <div class="form-group">
+                <label asp-for="userName" class="control-label"></label>
+                <input asp-for="userName" class="form-control" value="@Model.userName" />
+                <span asp-validation-for="userName" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="email" class="control-label"></label>
+                <input asp-for="email" class="form-control" value="@Model.email" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+
+            <p>Verify changes by inserting your password</p> 
+
+
+            <div class="form-group">
+                <label asp-for="password" class="control-label"></label>
+                <input asp-for="password" class="form-control" value="password"/>
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <p class="text-danger">
+                @ViewBag.FailedPasswordCheck
+            </p>
+           
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <h4>Change Password</h4>
+    <div class="col-md-4">
+        @using(Html.BeginForm("ChangePassword", "UserTest", FormMethod.Post))
+        {
+             
+            <div class="form-group">
+                <label class="control-label">Current password</label>
+                <input type="password" name="currentPassword" class="form-control" value="password"/>
+                
+                
+            </div>
+
+
+             <div class="form-group">
+                <label class="control-label">New password</label>
+                <input type="password" name="newPassword" class="form-control" value="password"/>
+                 
+                
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Verify Password</label>
+                <input type="password" name="verifyPassword" class="form-control" value="password"/>
+                 
+                
+            </div>
+
+            <p class="text-danger"> @ViewBag.PasswordError</p>
+            <p class="text-success"> @ViewBag.PasswordSuccess</p>
+            <div class="form-group">
+                <input type="submit" value="Change password" class="btn btn-primary" />
+            </div>
+        }
+</div>
+
+
+<div>
+    @Html.ActionLink("Back to Profile details", "Profile", new { username = Model.userName }) 
+    
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

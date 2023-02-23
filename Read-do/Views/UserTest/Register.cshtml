@@ -1,0 +1,66 @@
+﻿@model Read_do.Models.TblUserDetails
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register" id="form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           
+            <div class="form-group">
+                <label asp-for="userName" class="control-label" ></label>
+                <input asp-for="userName" class="form-control"/>
+                <span asp-validation-for="userName" class="text-danger"></span>
+            </div>
+
+            @if(ViewBag.NameError != null)
+            {
+                <p class="text-danger">@ViewBag.NameError</p>
+            }
+            
+
+            <div class="form-group">
+                <label asp-for="email" class="control-label" ></label>
+                <input asp-for="email" class="form-control" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+            @if(ViewBag.EmailError != null)
+            {
+                <p class="text-danger">@ViewBag.EmailError</p>
+            }
+            
+            <div class="form-group">
+
+                <label asp-for="password" class="control-label"></label>
+                <input asp-for="password" class="form-control"/>
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="verifyPassword">Verify Password</label>
+                <input class="form-control" type="password" id="verifyPassword" name="verifyPassword">
+                <p class="text-danger"></p>
+                
+            </div>
+
+           
+
+            <p class="text-danger">@ViewBag.PasswordError</p>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Login">Back to start page</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

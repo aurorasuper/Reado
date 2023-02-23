@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Read_do.Models.BookEntryDetails>
+
+@{
+    ViewData["Title"] = "My Reading List";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="BrowseBooks">Add new books to your list</a>
+</p>
+<h2>Books to read</h2>
+@ViewBag.Error
+@ViewBag.Delete
+@ViewBag.Score
+@if(Model != null){
+    @foreach (var item in Model) {
+        @if (!item.isRead)
+        {
+        <div class="container" id="book_card">
+        <div class="row">
+            <div class="col">
+
+              <img src="@Html.DisplayFor(modelItem => item.imageUrl)" alt="@Html.DisplayFor(modelItem => item.title) Cover" height="200">
+
+            </div>
+            <div class="col-5">
+                <h6>
+                    @Html.DisplayFor(modelItem => item.title)
+                </h6>
+                <p>@Html.DisplayNameFor(model => model.author): @Html.DisplayFor(modelItem => item.author)</p>
+                <p>@Html.DisplayNameFor(model => model.publishedYear): @Html.DisplayFor(modelItem => item.publishedYear)</p>
+                <p>@Html.DisplayNameFor(model => model.publisher): @Html.DisplayFor(modelItem => item.publisher)</p>
+                <p>@Html.DisplayNameFor(model => model.isbn): @Html.DisplayFor(modelItem => item.isbn)</p>
+ 
+            </div>
+            <div class="col ">
+               <div class="d-flex align-items-end flex-column">
+                   <div class="p-2">
+                       <div class="form-control-row align-items-center was-validated" id="ScoreContainer">
+                    
+                        
+                        @using(Html.BeginForm("UpdateScore", "UserTest", FormMethod.Post))
+                        {
+                             <label for="@Html.DisplayNameFor(model => model.score)">Score:</label>
+                             <select class="custom-select" id="@Html.DisplayNameFor(model => model.score)" name="score" required >
+                                 <option value="">Choose a score</option>
+                             @for(int i = 1; i < 6; i++)
+                             {
+                                 <option value=@i>@i</option>
+                             }
+                             </select>
+                             
+                                <input type="hidden" id="id" name="id" value=@item.id>
+                             <input type="submit" id="ScoreForm" name="ScoreForm" value="Update Score" class="btn btn-primary "/>       
+                            <div class="invalid-feedback">Choose a score between 1 and 5</div>
+                         }
+                    
+                 </div>
+                   </div>
+                   
+                 <div class="p-2">
+                     <button type="button" onclick="location.href='@Url.Action("ConfirmDeleteEntry","UserTest", new { id=item.id})'" class="btn btn-danger" >
+                            Delete
+                    </button>
+                 </div>
+                 
+               </div>
+                
+            </div>
+
+        </div>
+    </div>  
+        }
+           
+      }
+    }
+
+    <h2>Reading history</h2>
+@if(Model != null)
+{
+    @foreach (var item in Model) {
+        @if (item.isRead)
+        {
+            <div class="container" id="book_card">
+        <div class="row">
+            <div class="col">
+
+              <img src="@Html.DisplayFor(modelItem => item.imageUrl)" alt="@Html.DisplayFor(modelItem => item.title) Cover" height="200">
+
+            </div>
+            <div class="col-5">
+                <h6>
+                    @Html.DisplayFor(modelItem => item.title)
+                </h6>
+                <p>@Html.DisplayNameFor(model => model.author): @Html.DisplayFor(modelItem => item.author)</p>
+                <p>@Html.DisplayNameFor(model => model.publishedYear): @Html.DisplayFor(modelItem => item.publishedYear)</p>
+                <p>@Html.DisplayNameFor(model => model.publisher): @Html.DisplayFor(modelItem => item.publisher)</p>
+                <p>@Html.DisplayNameFor(model => model.isbn): @Html.DisplayFor(modelItem => item.isbn)</p>
+ 
+            </div>
+            <div class="col">
+                <p>@Html.DisplayNameFor(model => model.score): @Html.DisplayFor(modelItem => item.score)</p>
+                    </div>
+                    <div class="col d-flex align-items-end flex-column">
+                        <div class="p-2">
+                            <button type="button" onclick="location.href='@Url.Action("ConfirmDeleteEntry","UserTest", new { id=item.id})'" class="btn btn-danger" >
+                                        Delete
+                            </button>
+                        </div>
+                        
+                    </div>
+                 </div>
+                 
+            </div>
+     
+    }
+}
+}
+

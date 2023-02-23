@@ -1,0 +1,34 @@
+﻿@model Read_do.Models.TblUserDetails
+
+
+<p class="text-danger">@ViewBag.DeleteUser</p>
+<h3 class="text-danger">Are you sure you want to delete your account? All your information will be lost.</h3>
+<div>
+    <h4>TblUserDetails</h4>
+    <hr />
+    <dl class="row">
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.userName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.userName)
+        </dd>
+       
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.email)
+        </dd>
+       
+        
+    </dl>
+    <dl class="row">
+        
+    <form asp-action="DeleteProfile">
+            <input type="submit" value="Delete" class="btn btn-danger" /> 
+      
+        </form>
+    @Html.ActionLink("Cancel", "Profile", new { username = Model.userName }) 
+</div>
